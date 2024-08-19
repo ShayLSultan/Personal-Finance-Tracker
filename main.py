@@ -61,4 +61,23 @@ def add():
     description = get_description()
     CSV.add_entry(date, amount, category, description)
 
-CSV.get_transactions("01-08-2024", "19-08-2024")
+def main():
+    while True:
+        print("\n1. Add a new transaction")
+        print("\n2. View your transactions between a certain amount of time")
+        print("\n3. Exit")
+        choice = input("Please enter 1, 2, or 3 to select the option you would like.")
+        if choice == "1": 
+            add()
+        elif choice == "2":
+            start_date = get_date("Enter the start date in the format dd-mm-yyyy")
+            end_date = get_date("Enter the end date in the format dd-mm-yyyy") 
+            data_frame = CSV.get_transactions(start_date, end_date)
+        elif choice == "3":
+            print("Exiting Personal Finance Tracker")
+            break
+        else:
+            print("Invalid answer, please enter 1, 2, or 3")
+
+if __name__ == "__main__":
+    main()
