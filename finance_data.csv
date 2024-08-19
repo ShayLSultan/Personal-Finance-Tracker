@@ -1,3 +1,5 @@
 date,amount,category,description
-19-08-24,100,Expense,Perfume
+19-08-2024,100,Expense,Perfume
 19-08-2024,90.0,Expense,Jumper
+01-08-2024,10.0,Expense,Lunch
+02-08-2024,1000.0,Income,Monthly Salary
