@@ -2,6 +2,7 @@ from datetime import datetime
 
 date_format = "%d-%m-%Y"
 categories = {"I": "Income", "E": "Expense"}
+accounts = {"C": "Current", "S": "Savings"}
 
 def get_date(prompt, allow_default = False):
     date_string = input(prompt)
@@ -31,6 +32,14 @@ def get_category():
     else: 
         print("Invalid category, please enter 'I' for Income or 'E' for Expense")
         return get_category()
+
+def get_account():
+    account = input("Enter the account you would like to access: 'C' for Current or 'S' for Savings").upper()
+    if account in accounts:
+        return accounts[account]
+    else: 
+        print("Invalid response, please enter 'C' for Current or 'S' for Savings")
+        return get_account()
 
 def get_description():
     return input("Enter a description (optional)")

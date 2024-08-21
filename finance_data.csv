@@ -1,6 +1,5 @@
-date,amount,category,description
-19-08-2024,100,Expense,Perfume
-19-08-2024,90.0,Expense,Jumper
-01-08-2024,10.0,Expense,Lunch
-02-08-2024,1000.0,Income,Monthly Salary
-19-08-2024,30.0,Expense,Dinner
+date,account,amount,category,description
+20-08-2024,Current,10.0,Income,pocket money
+20-08-2024, Current,5.0,Expense, sweets
+20-08-2024, Savings,5.0,Income, pocket money
+21-08-2024,Current,99.0,Income, work wage

@@ -1,11 +1,11 @@
 import pandas as pd
 import csv 
 from datetime import datetime
-from data_entry import get_date, get_amount, get_category, get_description
+from data_entry import get_date, get_account, get_amount, get_category, get_description
 
 class CSV:
     csv_file = "finance_data.csv"
-    the_columns = ["date", "amount", "category", "description"]
+    the_columns = ["date", "account", "amount", "category", "description"]
     date_format = "%d-%m-%Y"
 
     @classmethod
@@ -16,9 +16,10 @@ class CSV:
             data_frame = pd.DataFrame(columns = self.the_columns)
             data_frame.to_csv(self.csv_file, index = False)
     @classmethod
-    def add_entry(self, date, amount, category, description):
+    def add_entry(self, date, account, amount, category, description):
         new_entry = {
             "date": date,
+            "account": account,
             "amount": amount,
             "category": category,
             "description": description
@@ -29,15 +30,18 @@ class CSV:
         print("Entry successfully added")
     
     @classmethod
-    def get_transactions(self, start_date, end_date):
+    def get_transactions(self, account, start_date, end_date):
         data_frame = pd.read_csv(self.csv_file)
         data_frame["date"] = pd.to_datetime(data_frame["date"], format = CSV.date_format)
         start_date = datetime.strptime(start_date, CSV.date_format)
         end_date = datetime.strptime(end_date, CSV.date_format)
         
         mask = (data_frame["date"] >= start_date) & (data_frame["date"] <= end_date)
-        filtered_data_frame = data_frame.loc[mask]
+        mask2 = (data_frame["account"] == account)
+        half_filtered_data_frame = data_frame.loc[mask2]
+        filtered_data_frame = half_filtered_data_frame.loc[mask]
 
+        
         if filtered_data_frame.empty:
             print("No transactions found in this date range")
         else:
@@ -56,10 +60,11 @@ class CSV:
 def add(): 
     CSV.init_csv()
     date = get_date("Please enter the date of the transaction as follows: dd-mm-yyyy, or press ENTER for today's date", allow_default = True)
+    account = get_account()
     amount = get_amount()
     category = get_category()
     description = get_description()
-    CSV.add_entry(date, amount, category, description)
+    CSV.add_entry(date, account, amount, category, description)
 
 def main():
     while True:
@@ -72,12 +77,14 @@ def main():
         elif choice == "2":
             start_date = get_date("Enter the start date in the format dd-mm-yyyy")
             end_date = get_date("Enter the end date in the format dd-mm-yyyy") 
-            data_frame = CSV.get_transactions(start_date, end_date)
+            account = get_account()
+            data_frame = CSV.get_transactions(account, start_date, end_date)
         elif choice == "3":
             print("Exiting Personal Finance Tracker")
             break
         else:
             print("Invalid answer, please enter 1, 2, or 3")
+
 
 if __name__ == "__main__":
     main()
